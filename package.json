@@ -1,0 +1,22 @@
+{
+  "name": "uploadanddisplaycsv",
+  "version": "1.0.0",
+  "description": "The server will upload and display the csv file",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ambika4/uploadAndDisplayCSV.git"
+  },
+  "author": "Ambika Kumari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ambika4/uploadAndDisplayCSV/issues"
+  },
+  "homepage": "https://github.com/Ambika4/uploadAndDisplayCSV#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
