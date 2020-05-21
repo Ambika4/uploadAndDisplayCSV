@@ -4,15 +4,14 @@ const multer=require('multer');
 const path=require('path');
 const AVATAR_PATH=path.join('/uploads/avatars');
 const fileSchema = new mongoose.Schema({
-  
-    //It store path of the uploads
-    avatar:{
-        type:String
-    }
-    },{
-        timestamps:true
+  //It store path of the uploads
+  avatar:{
+    type:String
+}
+},{
+    timestamps:true
 
-    });
+});
 
 
 let storage = multer.diskStorage({
@@ -30,9 +29,6 @@ let storage = multer.diskStorage({
 fileSchema.statics.uploadedAvatar=multer({storage: storage}).single('avatar');
 // as AVATAR_PATH need to publicly available
 fileSchema.statics.avatarPath=AVATAR_PATH;
-
-
-
 
 const File = mongoose.model('File',fileSchema);
 
