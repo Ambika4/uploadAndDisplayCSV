@@ -11,9 +11,21 @@
         <!-- if user matches then show the form -->
     <form action="/upload/file" enctype="multipart/form-data" method="POST">
         
-        <input type="file" name="avatar" placeholder="csv file">
+        <input type="file" name="avatar" placeholder="csv file" required>
         <input type="submit"  value="Submit">
     </form>
+    <div id ="display">
+       
+        <ul>
+        <% for(let file of files){ %>
+         <li>
+             <div>
+                 <%=file.name%>
+             </div>
+         </li>
+         <%}%>
+        </ul>
+    </div>
     </body>
 
 </html>

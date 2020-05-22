@@ -7,6 +7,9 @@ const fileSchema = new mongoose.Schema({
   //It store path of the uploads
   avatar:{
     type:String
+},
+name:{
+  type:String
 }
 },{
     timestamps:true
