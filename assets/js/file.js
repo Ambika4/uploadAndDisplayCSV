@@ -1,6 +1,6 @@
 {
-  
-    function myFunction() {
+  //function for search through one column
+    function searchColumn() {
       // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("myInput");
@@ -31,65 +31,75 @@
  * @param {number} column The index of the column to sort
  * @param {boolean} asc Determines if the sorting will be in ascending
  */
-function sortTableByColumn(table, column, asc = true) {
-    const dirModifier = asc ? 1 : -1;
-    const tBody = table.tBodies[0];
-    const rows = Array.from(tBody.querySelectorAll("tr"));
+    function sortTableByColumn(table, column, asc = true) {
+        const dirModifier = asc ? 1 : -1;
+        const tBody = table.tBodies[0];
+        const rows = Array.from(tBody.querySelectorAll("tr"));
 
-    // Sort each row
-    const sortedRows = rows.sort((a, b) => {
-        const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
-        const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+        // Sort each row
+        const sortedRows = rows.sort((a, b) => {
+            const aColText = a.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
+            const bColText = b.querySelector(`td:nth-child(${ column + 1 })`).textContent.trim();
 
-        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-    });
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
 
-    // Remove all existing TRs from the table
-    while (tBody.firstChild) {
-        tBody.removeChild(tBody.firstChild);
+        // Remove all existing TRs from the table
+        while (tBody.firstChild) {
+            tBody.removeChild(tBody.firstChild);
+        }
+
+        // Re-add the newly sorted rows
+        tBody.append(...sortedRows);
+
+        // Remember how the column is currently sorted
+        table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
+        table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
     }
 
-    // Re-add the newly sorted rows
-    tBody.append(...sortedRows);
+    document.querySelectorAll(".table-sortable th").forEach(headerCell => {
+        headerCell.addEventListener("click", () => {
+            const tableElement = headerCell.parentElement.parentElement.parentElement;
+            const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
+            const currentIsAscending = headerCell.classList.contains("th-sort-asc");
 
-    // Remember how the column is currently sorted
-    table.querySelectorAll("th").forEach(th => th.classList.remove("th-sort-asc", "th-sort-desc"));
-    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-asc", asc);
-    table.querySelector(`th:nth-child(${ column + 1})`).classList.toggle("th-sort-desc", !asc);
-}
-
-document.querySelectorAll(".table-sortable th").forEach(headerCell => {
-    headerCell.addEventListener("click", () => {
-        const tableElement = headerCell.parentElement.parentElement.parentElement;
-        const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
-        const currentIsAscending = headerCell.classList.contains("th-sort-asc");
-
-        sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+            sortTableByColumn(tableElement, headerIndex, !currentIsAscending);
+        });
     });
-});
+    //function for pagination
+    $(document).ready(function(){
+        $('#myTable').after('<div id="nav"></div>');
 
-$(document).ready(function(){
-    $('#myTable').after('<div id="nav"></div>');
-    var rowsShown = 100;
-    var rowsTotal = $('#myTable tbody tr').length;
-    var numPages = rowsTotal/rowsShown;
-    for(i = 0;i < numPages;i++) {
-        var pageNum = i + 1;
-        $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a> ');
-    }
-    $('#myTable tbody tr').hide();
-    $('#myTable tbody tr').slice(0, rowsShown).show();
-    $('#nav a:first').addClass('active');
-    $('#nav a').bind('click', function(){
+        //number of row per page
+        var rowsShown = 100;
+        //total number of row
+        var rowsTotal = $('#myTable tbody tr').length;
+        //number of page
+        var numPages = rowsTotal/rowsShown;
 
-        $('#nav a').removeClass('active');
-        $(this).addClass('active');
-        var currPage = $(this).attr('rel');
-        var startItem = currPage * rowsShown;
-        var endItem = startItem + rowsShown;
-        $('#myTable tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
-        css('display','table-row').animate({opacity:1}, 300);
+        //looping each page
+        for(i = 0;i < numPages;i++) {
+            var pageNum = i + 1;
+            $('#nav').append('<a href="#" rel="'+i+'">'+pageNum+'</a> ');
+        }
+        //hide all the table row
+        $('#myTable tbody tr').hide();
+        //show 100 rows
+        $('#myTable tbody tr').slice(0, rowsShown).show();
+        $('#nav a:first').addClass('active');
+        $('#nav a').bind('click', function(){
+
+            $('#nav a').removeClass('active');
+            $(this).addClass('active');
+            //getting current page
+            var currPage = $(this).attr('rel');
+            //row from where need to start
+            var startItem = currPage * rowsShown;
+            var endItem = startItem + rowsShown;
+            $('#myTable tbody tr').css('opacity','0.0').hide().slice(startItem, endItem).
+            css('display','table-row').animate({opacity:1}, 300);
+        });
     });
-});
 
 }

@@ -5,6 +5,7 @@ const fs=require('fs');
 const path=require('path');
 
 
+// rendering home page
 module.exports.home=async function(req,res){
     let files=await File.find({});
      return res.render('uploadCSV',{
@@ -13,11 +14,10 @@ module.exports.home=async function(req,res){
     });
 }
 
+//controller for uploading file
 module.exports.upload=async function(req,res){
    
-        try{
-
-            
+        try{ 
             let file=await File.create({
 
             })
@@ -51,19 +51,17 @@ module.exports.upload=async function(req,res){
 
 }
 
+//controller for dispalying file
 module.exports.display=async function(req,res){
     const results = [];
     let file= await File.findById(req.params.id)
     
     fs.createReadStream(path.join(__dirname,'..',file.avatar))
-  .pipe(csv({mapHeaders: ({ header, index }) => header.toLowerCase()}))
-  .on('data', (data) => results.push(data))
-  .on('end', () => {
+    .pipe(csv({mapHeaders: ({ header, index }) => header.toLowerCase()}))
+    .on('data', (data) => results.push(data))
+    .on('end', () => {
 //     console.log( Object.keys(results[0]).length);
 //    console.log(Object.keys(results[0]))
-
-
-
        return res.render('displayCSV',{
         title:"CSV|Display",
         results:results

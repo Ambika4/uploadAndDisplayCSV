@@ -13,29 +13,34 @@
         <h1>
             CSV
         </h1>
-        <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for second column..">
+        <!-- search box  -->
+        <input type="text" id="myInput" onkeyup="searchColumn()" placeholder="Search for second column..">
+       
+        <!-- table for displaying csv data -->
         <table id="myTable"class="table-sortable">
             <thead>
-            <tr>
-                     <% for(var i=0;i< Object.keys(results[0]).length;i++){ %> 
+                <tr>
+                    <!-- for storing key in header table -->
+                    <% for(var i=0;i< Object.keys(results[0]).length;i++){ %> 
                     <th >
                         <%=Object.keys(results[0])[i]%>
                     </th>
-                   
-                <%}%>  
-            </tr>
-        </thead>
-        <tbody>
-            <% for(let result of results){ %>
-                <tr>
-                    <% for(let key in result){ %>
-                        
-                        <td>
-                            <%=result[key]%>
-                        </td>
-                    <%}%>
+                    
+                    <%}%>  
                 </tr>
-                <%}%>
+            </thead>
+            <tbody>
+                <!-- getting results from display controller -->
+                <% for(let result of results){ %>
+                    <tr>
+                        <% for(let key in result){ %>
+                            
+                            <td>
+                                <%=result[key]%>
+                            </td>
+                        <%}%>
+                    </tr>
+                    <%}%>
             </tbody>
         </table>
         <script src="/js/file.js" ></script>

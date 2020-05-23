@@ -8,24 +8,24 @@
         <h1>
             CSV
         </h1>
-        <!-- if user matches then show the form -->
-    <form action="/files/upload" enctype="multipart/form-data" method="POST">
-        
-        <input type="file" name="avatar" placeholder="csv file" accept=".csv" required>
-        <input type="submit"  value="Submit">
-    </form>
-    <div id ="display">
-       
-        <ul>
-        <% for(let file of files){ %>
-         <li>
-             <div>
-                 <a href="http://localhost:8000/files/display/<%=file._id %>"><%=file.name%></a>
-             </div>
-         </li>
-         <%}%>
-        </ul>
-    </div>
+            <!-- form for uploading file-->
+        <form action="/files/upload" enctype="multipart/form-data" method="POST">
+            <label for="myfile">Select files:</label>
+            <input type="file" id="myfile" name="avatar" placeholder="csv file" accept=".csv" required><br><br>
+            <input type="submit"  value="Submit">
+        </form>
+        <!-- for displaying file -->
+        <div id ="display">
+            <ul>
+            <% for(let file of files){ %>
+                <li>
+                    <div>
+                        <a href="http://localhost:8000/files/display/<%=file._id %>"><%=file.name%></a>
+                    </div>
+                </li>
+            <%}%>
+            </ul>
+        </div>
     </body>
 
 </html>
