@@ -4,6 +4,7 @@ const csv = require('csv-parser')
 const fs=require('fs');
 const path=require('path');
 
+
 module.exports.home=async function(req,res){
     let files=await File.find({});
      return res.render('uploadCSV',{
@@ -15,14 +16,19 @@ module.exports.home=async function(req,res){
 module.exports.upload=async function(req,res){
    
         try{
+
             
             let file=await File.create({
 
             })
             File.uploadedAvatar(req,res,function(err){
+                if(req.file.originalname.split('.').pop()!='csv')
+                return res.redirect('/');
+                   
                 if(err){console.log('multer error',err)}
                 //Always check for file
                 if(req.file){
+
                     // console.log(req.file)
                     //this is saving the path of uploaded file into the avatar field into the user
                         if(file.avatar){
@@ -53,8 +59,10 @@ module.exports.display=async function(req,res){
   .pipe(csv({mapHeaders: ({ header, index }) => header.toLowerCase()}))
   .on('data', (data) => results.push(data))
   .on('end', () => {
-    // console.log(results);
-   
+//     console.log( Object.keys(results[0]).length);
+//    console.log(Object.keys(results[0]))
+
+
 
        return res.render('displayCSV',{
         title:"CSV|Display",
