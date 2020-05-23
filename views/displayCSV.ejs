@@ -4,6 +4,9 @@
            <%=title%>
         </title>
         <link rel="stylesheet" href="/css/file.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     </head>
     <body>
@@ -11,17 +14,18 @@
             CSV
         </h1>
         <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for second column..">
-        <table id="myTable">
+        <table id="myTable"class="table-sortable">
+            <thead>
             <tr>
-              
-                
                      <% for(var i=0;i< Object.keys(results[0]).length;i++){ %> 
-                    <th id="<%=i%>" onclick="sortTable(1)">
+                    <th >
                         <%=Object.keys(results[0])[i]%>
                     </th>
                    
                 <%}%>  
             </tr>
+        </thead>
+        <tbody>
             <% for(let result of results){ %>
                 <tr>
                     <% for(let key in result){ %>
@@ -32,7 +36,7 @@
                     <%}%>
                 </tr>
                 <%}%>
-        
+            </tbody>
         </table>
         <script src="/js/file.js" ></script>
     </body>
