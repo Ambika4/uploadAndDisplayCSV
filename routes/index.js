@@ -6,7 +6,7 @@ console.log('router loaded');
 
 const homeController=require('../controllers/file_controller');
 router.get('/',homeController.home);
-router.use('/upload',require('./upload'));
+router.use('/files',require('./files'));
 
 //for any further routes access from here
 //router.use('/routername',require('./routerfile));

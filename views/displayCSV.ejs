@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>
+           <%=title%>
+        </title>
+    </head>
+    <body>
+        <h1>
+            CSV
+        </h1>
+        <table>
+            <tr>
+                <% for(let key in results[0]){ %>
+                    <th>
+                        <%=key%>
+                    </th>
+                <%}%>  
+            </tr>
+            <% for(let result of results){ %>
+                <tr>
+                    <% for(let key in result){ %>
+                        
+                        <td>
+                            <%=result[key]%>
+                        </td>
+                    <%}%>
+                </tr>
+                <%}%>
+        
+        </table>
+    </body>
+</html>

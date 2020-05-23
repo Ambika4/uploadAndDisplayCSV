@@ -1,4 +1,5 @@
 const File=require('../models/File');
+const csv = require('csv-parser')
 //for deleting the module
 const fs=require('fs');
 const path=require('path');
@@ -42,4 +43,22 @@ module.exports.upload=async function(req,res){
             return res.redirect('back');
         }
 
+}
+
+module.exports.display=async function(req,res){
+    const results = [];
+    let file= await File.findById(req.params.id)
+    
+    fs.createReadStream(path.join(__dirname,'..',file.avatar))
+  .pipe(csv({mapHeaders: ({ header, index }) => header.toLowerCase()}))
+  .on('data', (data) => results.push(data))
+  .on('end', () => {
+    // console.log(results);
+   
+
+       return res.render('displayCSV',{
+        title:"CSV|Display",
+        results:results
+    });
+  });
 }
