@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/Ambika4/uploadAndDisplayCSV#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "csv-file-validator": "^1.8.0",
     "csv-parser": "^2.3.2",
+    "csval": "^1.0.6",
     "ejs": "^3.0.2",
     "express": "^4.17.1",
     "fast-csv": "^4.2.0",

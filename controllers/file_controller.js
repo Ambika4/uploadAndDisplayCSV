@@ -5,6 +5,7 @@ const fs=require('fs');
 const path=require('path');
 
 
+
 // rendering home page
 module.exports.home=async function(req,res){
     let files=await File.find({});
@@ -15,17 +16,17 @@ module.exports.home=async function(req,res){
 }
 
 //controller for uploading file
-module.exports.upload=async function(req,res){
-   
+module.exports.upload=async function(req,res){ 
         try{ 
             let file=await File.create({
 
             })
             File.uploadedAvatar(req,res,function(err){
-                if(req.file.originalname.split('.').pop()!='csv')
-                return res.redirect('/');
-                   
-                if(err){console.log('multer error',err)}
+               
+                if(err){
+                    file.remove();
+                    return res.status(422).json({message:err});
+                }
                 //Always check for file
                 if(req.file){
 
@@ -40,7 +41,7 @@ module.exports.upload=async function(req,res){
                     
                 }
                 file.save();
-                return res.redirect('/');
+                return res.status(200).redirect('/');
                 
             })
 

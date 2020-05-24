@@ -29,7 +29,27 @@ let storage = multer.diskStorage({
 
 //static function
 //single function id for only one file will uploaded in avatar
-fileSchema.statics.uploadedAvatar=multer({storage: storage}).single('avatar');
+fileSchema.statics.uploadedAvatar=multer({
+  storage: storage,
+  fileFilter: function(req, file, cb){
+    checkFileType(file, cb);}
+  }).single('avatar');
+
+  //for checking file type
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /csv/;
+  // Check ext
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: CSV File only!');
+  }
+}
 // as AVATAR_PATH need to publicly available
 fileSchema.statics.avatarPath=AVATAR_PATH;
 

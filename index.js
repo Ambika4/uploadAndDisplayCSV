@@ -2,7 +2,7 @@ const express = require('express');
 const path=require('path');
 const app = express();
 const multer = require('multer');
-const csv = require('fast-csv');
+const bodyParser = require('body-parser');
 
 const port=8000;/** On port 80 all website hosts */
 /*app listen to the port*/
@@ -10,6 +10,9 @@ const fs=require('fs');
 
 const db=require('./config/mongoose');
 
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.use(express.urlencoded());
 
 //makes the uploads paths available to the browser
