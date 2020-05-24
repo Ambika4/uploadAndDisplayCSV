@@ -12,7 +12,7 @@ Method:POST
 Input/Req:CSV file   
 Output/Res:file will appear in the list at home page.   
 
-2) list of all uploaded csv files   
+2)list of all uploaded csv files   
 route:http://localhost:8000/  
 Method:GET  
 Input/Req:none  
